@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/lore-workshop-tools/static/css/main.cc0e9f2b.css",
+    "main.js": "/lore-workshop-tools/static/js/main.06f6f6ca.js",
+    "static/js/453.fe803db7.chunk.js": "/lore-workshop-tools/static/js/453.fe803db7.chunk.js",
+    "index.html": "/lore-workshop-tools/index.html",
+    "main.cc0e9f2b.css.map": "/lore-workshop-tools/static/css/main.cc0e9f2b.css.map",
+    "main.06f6f6ca.js.map": "/lore-workshop-tools/static/js/main.06f6f6ca.js.map",
+    "453.fe803db7.chunk.js.map": "/lore-workshop-tools/static/js/453.fe803db7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cc0e9f2b.css",
+    "static/js/main.06f6f6ca.js"
+  ]
+}
