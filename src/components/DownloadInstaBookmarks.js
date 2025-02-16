@@ -86,7 +86,7 @@ const DownloadInstaBookmarks = () => {
           Ouvrez votre console de développement (<a href="https://support.monday.com/hc/fr/articles/360002197259-Comment-ouvrir-la-console-d%C3%A9veloppeur">tutoriel</a>)
         </li>
         <li>
-          Copiez le code ci-dessous (<button onClick={() => copy(snippet)}>cliquez ici pour le copier directement dans le presse-papier</button>)
+          Copiez le code ci-dessous (ou <button onClick={() => copy(snippet)}>cliquez ici pour le copier directement dans le presse-papier</button>)
         </li>
         <li>
           coller le code dans l'invite de commande et appuyez sur entrée

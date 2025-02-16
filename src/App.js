@@ -5,6 +5,7 @@ import { Routes, Route, HashRouter, Navigate, NavLink } from "react-router-dom";
 import SelfieDumpToCards from './components/SelfieDumpToCards';
 import DownloadInstaBookmarks from './components/DownloadInstaBookmarks';
 import DownloadYoutubeHistory from './components/DownloadYoutubeHistory';
+import ZeeschwimerTiktok from './components/ZeeschwimerTiktok';
 
 const summary = [
   {
@@ -22,6 +23,11 @@ const summary = [
     slug: 'youtube-history',
     component: (dimensions) => <DownloadYoutubeHistory {...dimensions} />
   },
+  {
+    title: 'Récupérer des données de tiktok',
+    slug: 'zeechwimer-tiktok',
+    component: (dimensions) => <ZeeschwimerTiktok {...dimensions} />
+  }
   // {
   //   title: 'Convertir export lore selfie en fichier de réseau',
   //   slug: 'ls-history-to-gexf',

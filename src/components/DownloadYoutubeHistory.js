@@ -49,7 +49,7 @@ const DownloadYoutubeHistory = () => {
           Depuis votre navigateur, rendez-vous sur la page de votre historique youtube : <a href="https://www.youtube.com/feed/history">https://www.youtube.com/feed/history</a>
         </li>
         <li>
-          Ouvrez votre console de développement (<a href="https://support.monday.com/hc/fr/articles/360002197259-Comment-ouvrir-la-console-d%C3%A9veloppeur">tutoriel</a>)
+          Ouvrez votre console de développement (ou <a href="https://support.monday.com/hc/fr/articles/360002197259-Comment-ouvrir-la-console-d%C3%A9veloppeur">tutoriel</a>)
         </li>
         <li>
           Copiez le code ci-dessous (<button onClick={() => copy(snippet)}>cliquez ici pour le copier directement dans le presse-papier</button>)

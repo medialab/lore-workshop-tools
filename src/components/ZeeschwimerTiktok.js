@@ -19,7 +19,48 @@ const getChannelURLFromPlatform = (platform, channel) => {
   }
 }
 
-const historyToContentCards = events => {
+const zeeschwimmerToContentCards = ndjson => {
+  const json = "[" + ndjson.replace(/\r?\n/g, ",").replace(/,\s*$/, "") + "]";
+  const reduceSubDataRecursive = (res, key, localData, prefix = '') => {
+    const value = localData[key];
+    // drop array subvalues
+    if (Array.isArray(value)) {
+      return res;
+      //recursively create sub object and integrate it
+    } else if (typeof value === "object") {
+      const subObj = Object.keys(value).reduce((res2, key2) => reduceSubDataRecursive(res2, key2, value, key + '_'), {});
+      return {
+        ...res,
+        ...subObj
+      }
+    } else {
+      return {
+        ...res,
+        [prefix + key]: value
+      }
+    }
+  }
+  const processed = JSON.parse(json).map(({data}) => {
+    return {
+      platform: 'tiktok',
+      title: data.desc,
+      channel: data.author.nickname,
+      channelName: data.author.uniqueId,
+      url: `https://www.tiktok.com/@${data.author.uniqueId}/video/${data.id}`,
+      type: 'content'
+    }
+  });
+  const channels = new Map();
+
+  processed.forEach(card => {
+    const { channel, platform } = card;
+    if (channel && !channels.get(channel)) {
+      const url = getChannelURLFromPlatform(platform, channel)
+      channels.set(channel, { channel, platform, url, type: 'channel' })
+    }
+  })
+  return [...processed, ...Array.from(channels).map(c => c[1])];
+  /*
   const browseEvents = events.filter(({ type }) => type === 'BROWSE_VIEW');
   console.log(browseEvents)
   const processed = browseEvents.map(event => {
@@ -47,9 +88,10 @@ const historyToContentCards = events => {
     }
   })
   return [...processed, ...Array.from(channels).map(c => c[1])];
+  */
 }
 
-const SelfieDumpToCards = ({
+const ZeeschwimerTiktok = ({
   width, height
 }) => {
   const [cardsData, setCardsData] = useState();
@@ -100,12 +142,14 @@ const SelfieDumpToCards = ({
           </div>
           :
           <div className="import-wrapper">
-            <h2>Générateur de cartes d'historique à imprimer</h2>
+            <h2>Générateur de cartes à partir de tiktok</h2>
             <ul>
-              <li>Ouvrir lore selfie</li>
-              <li>Aller dans exporter</li>
-              <li>Mettre en place les paramètres d'exports à votre guise (dates, anonymisation)</li>
-              <li>Cliquer sur "télécharger au csv"</li>
+              <li>Rendez-vous sur la page des <a href="https://wiki.digitalmethods.net/Dmi/ToolDatabase">outils DMI</a> et installer l'extension Zeeschwimmer (avant-dernière)</li>
+              <li>Une fois installé, cliquer sur l'icône de l'extension et activer "Tiktok (posts)" dans la liste</li>
+              <li>Naviguer sur tiktok pour récupérer les posts qui vous intéressent</li>
+              <li>Revenor dans l'onglet de l'extension et cliquer sur le bouton ".ndjson"</li>
+              <li>Revener ici et déposer le fichier</li>
+              <li>Revener ici et déposer le fichier</li>
             </ul>
             <p>
               ...ou bien utiliser l'un des scripts ci-contre pour récupérer des données via une autre plateforme
@@ -114,9 +158,9 @@ const SelfieDumpToCards = ({
               Puis :
             </p>
             <DropZone
+              acceptedExtensions={'ndjson'}
               onUpload={(str) => {
-                const inputs = csvParse(str);
-                const processData = historyToContentCards(inputs)
+                const processData = zeeschwimmerToContentCards(str)
                 setCardsData(processData)
               }}
             />
@@ -127,4 +171,4 @@ const SelfieDumpToCards = ({
   )
 }
 
-export default SelfieDumpToCards;
+export default ZeeschwimerTiktok;

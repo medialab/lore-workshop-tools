@@ -21,7 +21,7 @@ const DropZone = ({
     if (acceptedFiles) {
       reader.readAsText(acceptedFiles[0]);
     }
-  }, [])
+  }, [acceptedExtensions, onUpload]);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
 
