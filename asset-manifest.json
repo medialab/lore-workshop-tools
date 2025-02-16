@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/lore-workshop-tools/static/css/main.f965b170.css",
-    "main.js": "/lore-workshop-tools/static/js/main.fff4f991.js",
+    "main.css": "/lore-workshop-tools/static/css/main.77349d2b.css",
+    "main.js": "/lore-workshop-tools/static/js/main.ed82c839.js",
     "static/js/453.899ea3a1.chunk.js": "/lore-workshop-tools/static/js/453.899ea3a1.chunk.js",
     "index.html": "/lore-workshop-tools/index.html",
-    "main.f965b170.css.map": "/lore-workshop-tools/static/css/main.f965b170.css.map",
-    "main.fff4f991.js.map": "/lore-workshop-tools/static/js/main.fff4f991.js.map",
+    "main.77349d2b.css.map": "/lore-workshop-tools/static/css/main.77349d2b.css.map",
+    "main.ed82c839.js.map": "/lore-workshop-tools/static/js/main.ed82c839.js.map",
     "453.899ea3a1.chunk.js.map": "/lore-workshop-tools/static/js/453.899ea3a1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f965b170.css",
-    "static/js/main.fff4f991.js"
+    "static/css/main.77349d2b.css",
+    "static/js/main.ed82c839.js"
   ]
 }
