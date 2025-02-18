@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Measure from 'react-measure';
 import { Routes, Route, HashRouter, Navigate, NavLink } from "react-router-dom";
 import SelfieDumpToCards from './components/SelfieDumpToCards';
+import SelfieDumpToNetworkGraphs from './components/SelfieDumpToNetworkGraphs';
 import DownloadInstaBookmarks from './components/DownloadInstaBookmarks';
 import DownloadYoutubeHistory from './components/DownloadYoutubeHistory';
 import ZeeschwimerTiktok from './components/ZeeschwimerTiktok';
@@ -27,6 +28,11 @@ const summary = [
     title: 'Récupérer des données de tiktok',
     slug: 'zeechwimer-tiktok',
     component: (dimensions) => <ZeeschwimerTiktok {...dimensions} />
+  },
+  {
+    title: 'Générer des fichiers de réseau à partir d\'un historique',
+    slug: 'history-to-gexf',
+    component: dimensions => <SelfieDumpToNetworkGraphs {...dimensions} />
   }
   // {
   //   title: 'Convertir export lore selfie en fichier de réseau',

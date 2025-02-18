@@ -33,7 +33,7 @@ const DropZone = ({
         {
           isDragActive ?
             <p>Déposer les fichiers ici</p> :
-            <p>Déposer ici un export csv tiré de lore selfie, ou cliquez sur la barre.</p>
+            <p>Déposer ici un export {acceptedExtensions} tiré de lore selfie, ou cliquez sur la barre.</p>
         }
       </div>
     </div>
