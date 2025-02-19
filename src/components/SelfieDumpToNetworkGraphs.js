@@ -108,7 +108,6 @@ const historyToNetworks = ({ activities }) => {
   const networks = [
     // {
     //   keys: ['dayOfWeek'],
-
     // },
     // {
     //   keys: ['hourOfDay'],
@@ -133,11 +132,11 @@ const historyToNetworks = ({ activities }) => {
     const graph = buildNetworkGraph(processed, keys);
     const fileName = `lore-selfie-graph-keys-${keys.join('_')}.gexf`;
     const gexfString = gexf.write(graph);
-  //   downloadTextfile(
-  //     gexfString,
-  //     fileName,
-  //     'text/xml'
-  //   )
+    downloadTextfile(
+      gexfString,
+      fileName,
+      'text/xml'
+    )
   })
 
   return;
