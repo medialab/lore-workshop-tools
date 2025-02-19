@@ -78,13 +78,16 @@ const historyToNetworks = ({ activities }) => {
   ;
   const browseEvents = events.filter(({ type }) => type === 'BROWSE_VIEW');
   const processed = browseEvents.map(event => {
-    const { platform, url, metadata, date, id } = event;
+    const { platform, url, metadata, date, id, viewType } = event;
+    if (['short', 'other'].includes(viewType)) {
+      return undefined;
+    }
     const dateParsed = new Date(date);
     const dayOfWeek = dateParsed.getDay();
     const hourOfDay = dateParsed.getHours();
-    const title = metadata.title || event.title;
     const channelName = metadata.channelName || metadata.channelId;
     const channel = metadata.channelId || event.channelId;
+    const title = metadata.title || event.title || channel;
 
     return {
       id,
@@ -100,7 +103,7 @@ const historyToNetworks = ({ activities }) => {
       hourOfDaySlice3h: hourOfDay - hourOfDay % 3,
       hourOfDaySlice6h: hourOfDay - hourOfDay % 6
     }
-  }).filter(c => c.channel || c.title);
+  }).filter(c => c && (c.channel || c.title));
   // console.log(processed);
   const networks = [
     {
@@ -130,11 +133,11 @@ const historyToNetworks = ({ activities }) => {
     const graph = buildNetworkGraph(processed, keys);
     const fileName = `lore-selfie-graph-keys-${keys.join('_')}.gexf`;
     const gexfString = gexf.write(graph);
-    downloadTextfile(
-      gexfString,
-      fileName,
-      'text/xml'
-    )
+  //   downloadTextfile(
+  //     gexfString,
+  //     fileName,
+  //     'text/xml'
+  //   )
   })
 
   return;
