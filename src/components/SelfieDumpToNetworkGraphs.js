@@ -113,9 +113,9 @@ const historyToNetworks = ({ activities }) => {
     //   keys: ['hourOfDay'],
 
     // },
-    // {
-    //   keys: ['channel'],
-    // },
+    {
+      keys: ['channel'],
+    },
     // {
     //   keys: ['hourOfDaySlice3h'],
 
