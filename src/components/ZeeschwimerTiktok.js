@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import DropZone from './DropZone';
-import { csvParse } from 'd3-dsv';
 import { downloadTextfile } from '../helpers';
 import { JSONArrayToCSVStr } from '../helpers';
 
@@ -21,25 +20,7 @@ const getChannelURLFromPlatform = (platform, channel) => {
 
 const zeeschwimmerToContentCards = ndjson => {
   const json = "[" + ndjson.replace(/\r?\n/g, ",").replace(/,\s*$/, "") + "]";
-  const reduceSubDataRecursive = (res, key, localData, prefix = '') => {
-    const value = localData[key];
-    // drop array subvalues
-    if (Array.isArray(value)) {
-      return res;
-      //recursively create sub object and integrate it
-    } else if (typeof value === "object") {
-      const subObj = Object.keys(value).reduce((res2, key2) => reduceSubDataRecursive(res2, key2, value, key + '_'), {});
-      return {
-        ...res,
-        ...subObj
-      }
-    } else {
-      return {
-        ...res,
-        [prefix + key]: value
-      }
-    }
-  }
+  
   const processed = JSON.parse(json).map(({data}) => {
     return {
       platform: 'tiktok',

@@ -1,4 +1,3 @@
-
 import copy from 'copy-to-clipboard';
 import Highlight from 'react-highlight';
 import '../../node_modules/highlight.js/scss/darcula.scss';

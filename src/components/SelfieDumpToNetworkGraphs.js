@@ -1,24 +1,9 @@
 import React, { useState } from 'react'
 import DropZone from './DropZone';
 import Graph from "graphology"
-import forceAtlas2 from "graphology-layout-forceatlas2"
+// import forceAtlas2 from "graphology-layout-forceatlas2"
 import gexf from 'graphology-gexf/browser';
 import { downloadTextfile } from '../helpers';
-
-
-const getChannelURLFromPlatform = (platform, channel) => {
-  switch (platform) {
-    case 'tiktok':
-      return `https://www.tiktok.com/@${channel}`;
-    case 'instagram':
-      return `https://www.instagram.com/${channel}`;
-    case 'twitch':
-      return `https://www.twitch.tv/${channel}`;
-    case 'youtube':
-    default:
-      return `https://www.youtube.com/@${channel}`;
-  }
-}
 
 const buildNetworkGraph = (events, linkKeys = []) => {
   const graph = new Graph()
@@ -35,19 +20,41 @@ const buildNetworkGraph = (events, linkKeys = []) => {
       // color: legend.channel.color
     })
   })
-  events.forEach((event1, index1) => {
-    events.slice(index1 + 1).forEach((event2) => {
-      const relates = linkKeys.some(key => event1[key] === event2[key]);
-      if (relates) {
-        // const linkId = `from-${event1.id}-to${event2.id}`;
-        if (graph.hasEdge(`event-${event1.id}`, `event-${event2.id}`)) {
-          // console.log('ok', event1, event2)
-          graph.updateEdgeAttribute(`event-${event1.id}`, `event-${event2.id}`, 'weight', w => w + 1)
-        } else {
-          // console.log('add edge', event1.title, event2.title);
-          graph.addEdge(`event-${event1.id}`, `event-${event2.id}`, {weight: 1})
-        }
-      }
+  const edgesMap = new Map();
+  linkKeys.forEach(key => {
+    events.forEach((event1, index1) => {
+      events
+        .slice(index1 + 1)
+        .forEach((event2) => {
+          const relates = event1[key] === event2[key];
+          // console.log(linkKeys)
+          // if (event1.id === event2.id) return;
+          // const relates = linkKeys.find(key => {
+          //   if (linkKeys.length > 1 && key !== 'channel') {
+          //     console.log(event1.channel, event2.channel, event1.channel === event2.channel)
+          //     // console.log(key, event1[key], event2[key], event1[key] === event2[key]);
+          //   }
+          //   return event1[key] === event2[key]
+          // });
+          if (relates) {
+            const [eventAId, eventBId] = [`event-${event1.id}`, `event-${event2.id}`].sort();
+            const edgeId = [eventAId, eventBId].join('--');
+            // console.log(edgesMap)
+            // const linkId = `from-${event1.id}-to${event2.id}`;
+            // console.log('check', `event-${event1.id}`, `event-${event2.id}`, graph.hasEdge(`event-${event1.id}`, `event-${event2.id}`))
+            if (edgesMap.get(edgeId)) {
+              // if (graph.hasEdge(eventAId, eventBId)) {
+              const edgeSlug = edgesMap.get(edgeId);
+              // console.log('update', eventAId, eventBId, edgeId, edgeSlug)
+              graph.updateEdgeAttribute(edgeSlug, 'weight', w => w + 1);
+            } else {
+              // console.log('add edge', event1.title, event2.title);
+              const edge = graph.addEdge(eventAId, eventBId, { weight: 1 });
+              edgesMap.set(edgeId, edge)
+              // console.log('edge', edge);
+            }
+          }
+        })
     })
   })
   // const sensibleSettings = forceAtlas2.inferSettings(graph)
@@ -65,12 +72,11 @@ const buildNetworkGraph = (events, linkKeys = []) => {
   return graph;
 }
 
-const historyToNetworks = ({activities}) => {
-  console.log(activities);
+const historyToNetworks = ({ activities }) => {
+  // console.log(activities);
   const events = activities;
   ;
   const browseEvents = events.filter(({ type }) => type === 'BROWSE_VIEW');
-  console.log(browseEvents);
   const processed = browseEvents.map(event => {
     const { platform, url, metadata, date, id } = event;
     const dateParsed = new Date(date);
@@ -91,8 +97,8 @@ const historyToNetworks = ({activities}) => {
       date,
       dayOfWeek,
       hourOfDay,
-      hourOfDaySlice3h: hourOfDay - hourOfDay%3,
-      hourOfDaySlice6h: hourOfDay - hourOfDay%6
+      hourOfDaySlice3h: hourOfDay - hourOfDay % 3,
+      hourOfDaySlice6h: hourOfDay - hourOfDay % 6
     }
   }).filter(c => c.channel || c.title);
   // console.log(processed);
@@ -107,7 +113,7 @@ const historyToNetworks = ({activities}) => {
     },
     {
       keys: ['channel'],
-    },  
+    },
     {
       keys: ['hourOfDaySlice3h'],
 
@@ -120,7 +126,7 @@ const historyToNetworks = ({activities}) => {
       keys: ['channel', 'hourOfDaySlice3h', 'dayOfWeek']
     }
   ]
-  networks.forEach(({keys}) => {
+  networks.forEach(({ keys }) => {
     const graph = buildNetworkGraph(processed, keys);
     const fileName = `lore-selfie-graph-keys-${keys.join('_')}.gexf`;
     const gexfString = gexf.write(graph);
@@ -130,7 +136,7 @@ const historyToNetworks = ({activities}) => {
       'text/xml'
     )
   })
-  
+
   return;
   // return [...processed, ...Array.from(channels).map(c => c[1])];
 }
