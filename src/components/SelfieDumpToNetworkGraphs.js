@@ -106,25 +106,25 @@ const historyToNetworks = ({ activities }) => {
   }).filter(c => c && (c.channel || c.title));
   // console.log(processed);
   const networks = [
-    {
-      keys: ['dayOfWeek'],
+    // {
+    //   keys: ['dayOfWeek'],
 
-    },
-    {
-      keys: ['hourOfDay'],
+    // },
+    // {
+    //   keys: ['hourOfDay'],
 
-    },
-    {
-      keys: ['channel'],
-    },
-    {
-      keys: ['hourOfDaySlice3h'],
+    // },
+    // {
+    //   keys: ['channel'],
+    // },
+    // {
+    //   keys: ['hourOfDaySlice3h'],
 
-    },
-    {
-      keys: ['hourOfDaySlice6h'],
+    // },
+    // {
+    //   keys: ['hourOfDaySlice6h'],
 
-    },
+    // },
     {
       keys: ['channel', 'hourOfDaySlice3h', 'dayOfWeek']
     }
